@@ -60,7 +60,7 @@ __global__ void gaussian_separable_col(const float* in, float* out, int W, int H
   if(gx < W && gy < H){ float sum=0.0f; for(int k=-radius;k<=radius;++k) sum += d_kernel[k+radius]*sdata[sidx + k*blockDim.x]; out[gy*W + gx] = sum; }
 }
 
-void host_gaussian_blur(const float* d_in, float* d_out, int W, int H, int kernel_size){
+void host_gaussian_blur(float* d_in, float* d_out, int W, int H, int kernel_size){
   int radius = kernel_size/2;
   // assumption: host has prepared kernel in host memory; copy done by caller via copy_kernel_to_const
   dim3 t(32,8);
