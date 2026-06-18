@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container:
+      image: nvidia/cuda:12.3.0-devel-ubuntu22.04
+      options: --gpus all
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          apt-get update && apt-get install -y build-essential cmake git libglvnd-dev
+      - name: Configure
+        run: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cd build && make -j2
+      - name: Run tests
+        run: cd build && ctest --output-on-failure
