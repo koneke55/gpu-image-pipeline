@@ -18,6 +18,11 @@ add_executable(cuda_image_processing ${CPP_SOURCES} ${CU_SOURCES})
 target_link_libraries(cuda_image_processing PUBLIC CUDA::cudart)
 target_include_directories(cuda_image_processing PUBLIC include)
 
+# Example/test runner for histogram equalization (built by default)
+add_executable(hist_eq_test src/tools/hist_eq_test.cu)
+target_link_libraries(hist_eq_test PUBLIC CUDA::cudart)
+target_include_directories(hist_eq_test PUBLIC include)
+
 option(BUILD_TESTS "Build tests" OFF)
 if(BUILD_TESTS)
   include(FetchContent)
